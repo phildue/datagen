@@ -1,65 +1,42 @@
-# dronerace2018
-Drone Race 2018
+# Simulator Installation
+## Windows
 
-## Overview 
+- Install UnrealEngine via [Epic Games Launcher (v > 4.16)](https://www.unrealengine.com/download)
+- Install [cmake](https://cmake.org/files/v3.11/cmake-3.11.0-rc4-win64-x64.msi)
+- Install [Visual Studio](https://www.visualstudio.com/downloads/)
+- Install [Windows 8.1 SDK](https://go.microsoft.com/fwlink/p/?LinkId=323507)
+
+- Clone this repo including submodules with:
+ ```
+ git clone --recursive https://github.com/phildue/datagen.git 
+ ```
+  Sometimes the submodules are not cloned correctly. You can tell that if the folder in target/simulator/AirSim is empty. In that case get the submodules with:
 ```
-|-- doc:            Some diagrams
-|-- innerloop:      low level control loop of the drone
-|-- outerloop:      high level control loop of the drone
-|-- lib:            Libraries like opencv, eigen
-|-- target:         the project files depending on where the code shall run
-   |-- test:        Projects to run the code in a terminal with handcrafted/file input
-      |-- examples: Example projects for testing
-   |-- simulator:   Projects to run the code in the simulator
-      |-- examples: Example projects for simulation
-   |-- jevois:      Projects to run the code on the jevois
+ git submodule update --init --recursive
 ```
-## Installation
 
-###  Tools
-We use [cmake](https://cmake.org/files/v3.11/cmake-3.11.0-rc4-win64-x64.msi) as build tool. It can be integrated to almost every IDE so it shouldn't matter if you use Visual Studio/CLion/Codeblocks/Make etc. However, so far its only tested with VisualStudio and that one is also needed if you wanna create environments for the simulator.
+- Open the solution file in Visual Studio. If it wants to upgrade the projects select *yes*.
 
-### Submodules
-To make sure you have all submodules run ```git submodule update  --init --recursive```
+- Open developers command prompt and execute AirSim/build.cmd. If prompted with: 
+```
+Starting cmake to build rpclib...
+CMake Error at CMakeLists.txt:2 (project):
+  Failed to run MSBuild command:
 
-### Build the libraries:
-- OpenCV: 
-  * Create the folder "build" in lib/opencv/
-  * Execute ```cmake -G "Visual Studio 15 2017 Win64" ..``` 
-  (If you use another compiler look for the generator you need. You can also type ```cmake ..``` and hope it will detect         it automatically.)
-  * Execute ```cmake --build .```
-  * Get a coffee
-  * If you are on Windows adapt your PATH variable. Extend it to the path lib/opencv/build/bin/Debug
-- AirSim:
-  * see [here](target/simulator/README.md)
-  
-### Verfiy installation:
-  - Go to target/test/loop
-  - create a folder "build"
-  - Execute ```cmake -G "Visual Studio 15 2017 Win64" .. ```(If you use another compiler look for the generator you need)
-  - Execute ```cmake --build .```
-  - Go to target/test/loop/bin/Debug
-  - Run loop_test.exe
-  
-  
-  ## Example Workflow
-  Assuming you want to add an average filter to the filter module:
-  1. Create a new branch called "average_filter" ```git checkout -b branch average_filter``` 
-  2. Create a new project that includes the other sources by copying the folder "loop" in target/test and renaming it to "AverageFilter".
-  3. Open the cmake file with Visual Studio or another IDE.
-  4. Rename the project() in the cmake file.
-  5. In the folder outerloop/src/filtering add a class called "AverageFilter" and add it to the cmake file in outerloop/CMakeList.txt
-  6. Adapt the main function of your project such that it creates an object of your class and runs the code you implement.
-  7. Throughout the process add and commit your changes regularly. 
-  ```git add outerloop/src/AwesomeAverageFilter.cpp outerloop/src/AwesomeAverageFilter.h target/test/AverageFilter/CMakeLists.txt target/test/AverageFilter/src/main.cpp```
-  ```git commit -m "added average filter"```
-  8. Implement your code and test whether it works.
-  9. Potentially also create a project in target/simulator by copying the "loop" folder. If step 5 succeeded you should see your new source files as well.
-  10. Test your code in the simulation.
-  11. Integrate your code to the rest of the outerloop.
-  12. Make sure everything works by compiling and running target/test/loop and target/simulator/loop.
-  13. Commit everything you added ```git commit -m "average filter integrated"``` 
-  14. Push your branch ```git push origin average_filter```
-  15. Go to Github and submit a pull request with your changes.
-  16. See what other features we need and start again with 1. :).
-  
+    MSBuild.exe
+
+  to get the value of VCTargetsPath:
+
+    The system cannot find the file specified
+```
+the script is looking for the wrong version of visual studio. 
+  - Open AirSim/build.bat and change line 60 to your version (e.g. "Visual Studio 15 2017 Win64"). 
+  - Remove the directory AirSim/external/rpclib/rpclib-*-*/build and rerun AirSim/build.cmd.
+
+- To test whether everything is properly build you can test the simulator in the Blocks environment:
+  - Go to AirSim/Unreal/Environments/Blocks and run "update_from_git.cmd"
+  - Sometimes the UnrealEngine is not registered properly. In that case the command above fails complaining about a key not found in the registry. To fix that go to the folder of your *Epic Games Launcher* and look for "Epic Games\Launcher\Engine\Binaries\Win64\VersionSelector.exe" copy that file to the installation path of the *UnrealEngine*, paste it in "Epic Games\UE_4.19\Engine\Binaries\Win64" and run it. It should conclude with "Registration successfull". After that the above should work.
+  - Open the created .sln file, hit "run" and pray.
+  - The UnrealEditor should show up and "Play" should start the simulation. The drone can only be flewn with a proper controller. However the car can be tested with arrow keys.
+
+
