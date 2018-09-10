@@ -59,7 +59,6 @@ set(ASC_HEADERS
 
 
 include_directories(
-  ../common
   ${AIRSIM_ROOT}/AirLib/include
   ${RPC_LIB_INCLUDES}
   ${OpenCV_INCLUDE_DIRS}
