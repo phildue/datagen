@@ -27,7 +27,7 @@ IncludeEigen()
 
 SetupConsoleBuild()
 
-set(CLIENT_SRC_DIR ${PROJECT_ROOT}/src/client/)
+set(CLIENT_SRC_DIR ${PROJECT_ROOT}/src/cpp/client/)
 set(ASC_INCLUDES ${CLIENT_SRC_DIR})
 set(ASC_SOURCES 
                         ${CLIENT_SRC_DIR}/airsim/AirSimInterface.cpp
@@ -79,7 +79,7 @@ set(HEADERS
                     ${OUTERLOOP_HEADERS}
                     )
 
-add_executable(randomview ${SOURCES} ${HEADERS} src/datagen/randomview.cpp)
+add_executable(randomview ${SOURCES} ${HEADERS} src/cpp/datagen/randomview.cpp)
 
 target_link_libraries(randomview ${CMAKE_THREAD_LIBS_INIT})
 
