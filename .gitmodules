@@ -1,0 +1,12 @@
+[submodule "target/simulator/AirSim"]
+	path = lib/AirSim
+	url = https://github.com/Microsoft/AirSim
+[submodule "lib/opencv"]
+	path = lib/opencv
+	url = https://github.com/opencv/opencv.git
+[submodule "lib/eigen-git-mirror"]
+	path = lib/eigen-git-mirror
+	url = https://github.com/eigenteam/eigen-git-mirror.git
+[submodule "lib/betaflight"]
+	path = innerloop/betaflight
+	url = https://github.com/betaflight/betaflight.git
