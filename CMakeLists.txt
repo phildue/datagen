@@ -71,11 +71,9 @@ link_directories(${AIRSIM_ROOT}/AirLib/lib/x64/Debug/)
 
 set(SOURCES
                         ${ASC_SOURCES}
-                        ${OUTERLOOP_SOURCES}
                         )
 set(HEADERS
         ${ASC_HEADERS}
-                    ${OUTERLOOP_HEADERS}
                     )
 
 add_executable(randomview ${SOURCES} ${HEADERS} src/cpp/datagen/randomview.cpp)
