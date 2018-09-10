@@ -45,7 +45,6 @@ set(ASC_HEADERS
                         ${CLIENT_SRC_DIR}/airsim/Session.h
                         ${CLIENT_SRC_DIR}/Image.h
                         ${CLIENT_SRC_DIR}/gui/CmdListener.h
-                        ${CLIENT_SRC_DIR}/tools/DataLogger.h
                         ${CLIENT_SRC_DIR}/annotate/Gate.h
                         ${CLIENT_SRC_DIR}/annotate/Camera.h
                         ${CLIENT_SRC_DIR}/annotate/Annotator.h
