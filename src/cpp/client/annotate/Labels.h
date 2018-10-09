@@ -8,7 +8,7 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
-
+#include <vector>
 #define MAX_CORNERS 8
 
 struct ObjectLabel{
@@ -139,10 +139,8 @@ struct GateLabel : public ObjectLabel {
 
 };
 
-#define MAX_OBJ 20
 struct ImageLabel{
-    ObjectLabel objects[MAX_OBJ]{};
-    int n_objects = 0;
+    std::vector<ObjectLabel*> objects;
 
     std::string toXml(std::string &filename){
         std::ostringstream xml;
@@ -151,21 +149,15 @@ struct ImageLabel{
         xml << filename;
         xml << "</filename>";
 
-        for (int i=0; i < n_objects; i++){
-            xml << objects[i].toXml();
+        for (ObjectLabel *obj : objects){
+            xml << obj->toXml();
         }
         xml << "</annotation>";
 
         return xml.str();
     }
 
-    void add(ObjectLabel &label){
-        if(n_objects < MAX_OBJ){
-            objects[n_objects++] = label;
-        }else{
-            throw std::exception("To many objects per image");
-        }
-    }
+
 
 };
 

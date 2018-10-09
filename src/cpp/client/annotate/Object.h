@@ -7,6 +7,7 @@
 
 
 #include <common/Common.hpp>
+#include "Labels.h"
 
 #ifdef INDUSTRIAL_ROOM
 #define GATE_W 3.3f
@@ -32,6 +33,9 @@ struct Object {
      */
     virtual Eigen::Matrix4Xf toMat() = 0;
 
+    virtual ObjectLabel* asLabel(){
+        return new ObjectLabel();
+    }
 
 };
 

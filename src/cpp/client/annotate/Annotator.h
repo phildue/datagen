@@ -24,12 +24,12 @@ public:
     Annotator(std::vector<Object *> &objects,
               Camera &cam,
               std::string &path,
-              int t_log_ms = 500,
+              std::string &image_format,
               int start_idx = 0)
             : objects(objects),
               cam(cam),
               path(path),
-              t_log_ms(t_log_ms),
+              image_format(image_format),
               index(start_idx)
     {};
 
@@ -62,15 +62,15 @@ public:
      * @param label
      * @param filename
      */
-    static void write(cv::Mat &mat, ImageLabel &label, std::string &filename);
+    static void write(cv::Mat &mat, ImageLabel &label, std::string &filename,const std::string &image_format);
 
 protected:
     std::vector<Object *> objects;
     Camera cam;
     int index;
-    int t_log_ms;
-    const std::string path;
+    const std::string path,image_format;
 
+    void toEulerianAngle(Eigen::Quaternion<float, 2> quaternion, float *pitch, float *roll, float *yaw);
 };
 
 

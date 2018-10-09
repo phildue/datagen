@@ -15,32 +15,33 @@ public:
     int min_obj_width,
     int max_obj_height,
     int min_obj_height,
-    float max_angle,
+    float max_aspect_ratio,
+    float min_aspect_ratio,
     int img_width,
     int img_height):max_obj_height(max_obj_height),
                     max_obj_width(max_obj_width),
                     min_obj_height(min_obj_height),
                     min_obj_width(min_obj_width),
-                    max_angle(max_angle),
+                    max_aspect_ratio(max_aspect_ratio),
+                    min_aspect_ratio(min_aspect_ratio),
                     img_height(img_height),
                     img_width(img_width){
-        max_aspect_ratio = (1.125f / (max_angle / 90.0f));
     }
 protected:
     int max_obj_width;
     int min_obj_width;
     int max_obj_height;
     int min_obj_height;
-    float max_angle;
     int img_width;
     int img_height;
 
     bool out_of_img(int x, int y);
-    int out_of_img(ObjectLabel &obj);
-    bool out_of_size(ObjectLabel &obj);
-    bool bad_angle(ObjectLabel &obj);
+    int out_of_img(ObjectLabel *obj);
+    bool out_of_size(ObjectLabel *obj);
+    bool bad_angle(ObjectLabel *obj);
 
     float max_aspect_ratio;
+    float min_aspect_ratio;
 };
 
 

@@ -41,8 +41,8 @@ generateSample() {
     Annotator::annotate(imageAnn, label_filtered);
 
 
-    if (label.n_objects == label_filtered.n_objects &&
-        label_filtered.n_objects >= min_n_objects) {
+    if (label.objects.size() == label_filtered.objects.size() &&
+        label_filtered.objects.size() >= min_n_objects) {
         ann.write(image, label_filtered);
         cv::imshow("Sample", imageAnn);
         cv::waitKey(1);
