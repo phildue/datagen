@@ -68,6 +68,7 @@ public:
      * @return
      */
     static Eigen::Quaternionf euler2Quat(float roll, float pitch, float yaw) ;
+
 };
 
 

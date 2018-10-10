@@ -53,6 +53,43 @@ struct ObjectLabel{
         return abs(yMax() - yMin());
     }
 
+    int overlapX(ObjectLabel *obj){
+        if (xMin() >= obj->xMin()){
+            if(xMax() < obj->xMax()){
+                return width();
+            }else{
+                return obj->xMax() - obj->xMin();
+            }
+        }
+        if(xMin() <= obj->xMin()){
+            if(xMax() > obj->xMax()){
+                return obj->width();
+            }
+            else{
+                return xMax() - obj->xMin();
+            }
+        }
+        return 0;
+    }
+    int overlapY(ObjectLabel *obj){
+        if (yMin() >= obj->yMin()){
+            if(yMax() < obj->yMax()){
+                return height();
+            }else{
+                return obj->yMax() - obj->yMin();
+            }
+        }
+        if(yMin() <= obj->yMin()){
+            if(yMax() > obj->yMax()){
+                return obj->height();
+            }
+            else{
+                return yMax() - obj->yMin();
+            }
+        }
+        return 0;
+    }
+
     float aspect_ratio(){
         return (float)height()/(float)width();
     }

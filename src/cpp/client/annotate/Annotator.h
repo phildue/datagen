@@ -64,6 +64,8 @@ public:
      */
     static void write(cv::Mat &mat, ImageLabel &label, std::string &filename,const std::string &image_format);
 
+    static std::vector<ObjectLabel*> filterOverlap(std::vector<ObjectLabel*> label);
+
 protected:
     std::vector<Object *> objects;
     Camera cam;
