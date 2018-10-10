@@ -7,7 +7,8 @@
 
 
 #include <common/Common.hpp>
-#include "Gate.h"
+#include "Object.h"
+
 class Camera{
 
 public:

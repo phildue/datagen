@@ -5,6 +5,7 @@ AirSimInterface()
 {
     client = new msr::airlib::MultirotorRpcLibClient;
     this->session = new Session(client);
+    connect();
 }
 
 AirSimInterface::
@@ -18,7 +19,6 @@ AirSimInterface::
 setDronePose(float north, float east, float down, float roll, float pitch, float yaw)
 {
 	Eigen::Quaternionf q = euler2Quat(roll,pitch,yaw);
-
 	client->simSetPose(msr::airlib::Pose(Eigen::Vector3f({ north,east,down }), q),true);
 }
 

@@ -45,7 +45,7 @@ set(ASC_HEADERS
                         ${CLIENT_SRC_DIR}/airsim/Session.h
                         ${CLIENT_SRC_DIR}/Image.h
                         ${CLIENT_SRC_DIR}/gui/CmdListener.h
-                        ${CLIENT_SRC_DIR}/annotate/Gate.h
+                        ${CLIENT_SRC_DIR}/annotate/Gates.h
                         ${CLIENT_SRC_DIR}/annotate/Camera.h
                         ${CLIENT_SRC_DIR}/annotate/Annotator.h
                         ${CLIENT_SRC_DIR}/annotate/RandomPoseDataGenerator.h
@@ -54,10 +54,24 @@ set(ASC_HEADERS
                         ${CLIENT_SRC_DIR}/annotate/Labels.h
                         ${CLIENT_SRC_DIR}/annotate/Object.h
                         ${CLIENT_SRC_DIR}/gui/InputParser.h
+                        ${CLIENT_SRC_DIR}/gui/Args.h
         )
 
 
-
+set(FLIGHTSIM_SRC
+        ${CLIENT_SRC_DIR}/annotate/AnnotatorFlight.cpp
+        ${CLIENT_SRC_DIR}/annotate/AnnotatorFlight.h
+        ${CLIENT_SRC_DIR}/annotate/TrajectoryPoseGenerator.h
+        ${CLIENT_SRC_DIR}/annotate/TrajectoryPoseGenerator.cpp
+        ${CLIENT_SRC_DIR}/sim/Simulation.h
+        ${CLIENT_SRC_DIR}/sim/DroneModel.h
+        ${CLIENT_SRC_DIR}/sim/Autopilot.h
+        ${CLIENT_SRC_DIR}/sim/SensorModel.h
+        ${CLIENT_SRC_DIR}/sim/DroneModel.cpp
+        ${CLIENT_SRC_DIR}/sim/Simulation.cpp
+        ${CLIENT_SRC_DIR}/sim/Autopilot.cpp
+        ${CLIENT_SRC_DIR}/sim/SensorModel.cpp
+        )
 include_directories(
   ${AIRSIM_ROOT}/AirLib/include
   ${RPC_LIB_INCLUDES}
@@ -83,6 +97,13 @@ target_link_libraries(randomview AirLib)
 target_link_libraries(randomview ${RPC_LIB})
 target_link_libraries(randomview ${OpenCV_LIBS})
 
+add_executable(flightsimu ${SOURCES} ${HEADERS} src/cpp/datagen/flightsimu.cpp ${FLIGHTSIM_SRC})
+
+target_link_libraries(flightsimu ${CMAKE_THREAD_LIBS_INIT})
+
+target_link_libraries(flightsimu AirLib)
+target_link_libraries(flightsimu ${RPC_LIB})
+target_link_libraries(flightsimu ${OpenCV_LIBS})
 
 
 

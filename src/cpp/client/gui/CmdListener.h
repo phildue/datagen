@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CMD_LISTENER_H
+#define CMD_LISTENER_H
 #include <atomic>
 #include <string>
 #include <map>
@@ -7,8 +8,6 @@
 
 class CmdListener {
 private:
-	std::thread thread;
-	std::atomic<bool> running;
 	std::map<std::string, std::function<void(std::string,std::string)>> commands;
     std::map<std::string, std::string> help;
 
@@ -24,3 +23,4 @@ public:
     void printHelp();
 
 };
+#endif

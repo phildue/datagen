@@ -17,7 +17,6 @@ STRICT_MODE_ON
 #include <iostream>
 #include <chrono>
 #include <Image.h>
-#include <annotate/Gate.h>
 #include "Session.h"
 
 #define MAX_OBJS 20
