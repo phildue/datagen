@@ -102,12 +102,13 @@ private:
 	float p;
 	float q;
 	float r;
-	long long lastPropagateTime;
+	long long last_timestep_ms;
 	float lastStepThrust;
 	Vector3f specificForce;
 	void setStateVector(Matrix<float,12,1> state);
 	static long long startupTime;
 public:
+    long long timestep_ms;
 	DroneModel();
 	~DroneModel();
     void setCommand(float phi_r,float theta_r,float psi_r,float thrust);
@@ -129,32 +130,9 @@ public:
 	Vector3f getSpecificForce(){ return specificForce;};
 	Matrix<float,12,1> getStateVector();
 	void propagateDroneModel();
-	static long long getCurrentTimeMillis();
 };
 
-class TempleController
-{
-private:
-	float x_r;
-	float y_r;
-	float z_r;
-	float psi_r;
-	float v_x_r;
-	float v_y_r;
-	float v_z_r;
-    float previous_error_phi;
-	float sum_error_phi;
-	float previous_error_theta;
-	float sum_error_theta;
-	float sum_error_thrust;
-    long long lastTimeStamp;
-	long long getCurrentTimeMillis();
-public:
-    TempleController();
-	~TempleController();
-	void controllerRun(DroneModel & drone);
-    void setReference(float x,float y,float z,float heading);
-};
+
 
 
 #endif

@@ -14,7 +14,7 @@
 
 #include <airsim/AirSimInterface.h>
 #include <gui/CmdListener.h>
-#include "Autopilot.h"
+#include "Controller.h"
 #include "Kinematics.h"
 #include "SensorModel.h"
 
@@ -40,13 +40,13 @@ protected:
     SensorModel sensorModel;
     mav::Kinematics sensorData{},groundTruth{},command{};
     AirSimInterface *airsim;
-    Autopilot autopilot;
+    Controller autopilot;
     std::mutex guard;
     ControlMode mode=POSITION_MODE;
 
     CmdListener cmdListener;
     std::thread airsimThread,modelThread,cmdThread;
-    long long startTime;
+    long long timestep_ms;
     std::atomic<bool> running=false,paused=false;
     void threadModel();
     void threadAirsim();

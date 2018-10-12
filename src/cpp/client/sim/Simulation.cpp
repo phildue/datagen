@@ -3,8 +3,8 @@
 //
 
 #include <opencv2/imgproc.hpp>
-#include <Image.h>
 #include <opencv2/highgui.hpp>
+#include <airsim/Image.h>
 #include "Simulation.h"
 #include "Kinematics.h"
 
@@ -61,6 +61,13 @@ modelUpdate()
      * One iteration of the model + controller.
      * After updating both we inform the event handler.
      * **/
+    timestep_ms += (long long)(1000.0/control_frq_hz);
+    autopilot.timestep_ms = timestep_ms;
+    model.timestep_ms = timestep_ms;
+    sensorModel.timestep_ms = timestep_ms;
+
+
+
     guard.lock();
     mav::Kinematics groundTruth = this->groundTruth;
     guard.unlock();
@@ -105,6 +112,7 @@ modelUpdate()
             autopilot.setReference(0,0,0,0);
 
     }
+
     mav::Kinematics cmd = autopilot.controllerRun(groundTruth);
     model.setCommand(cmd.phi, cmd.theta, cmd.psi, cmd.accZ);
     model.propagateDroneModel();
@@ -147,7 +155,6 @@ modelUpdate()
             0,
             0,
     };
-    std::cout << "done" << std::endl;
 
     guard.lock();
     this->groundTruth = groundTruth;
@@ -202,7 +209,7 @@ void Simulation::setRefVelocity(float v_x,float v_y,float v_z,float heading) {
     guard.unlock();}
 
 void Simulation::startSim() {
-    startTime = getCurrentTimeMillis();
+
     cmdListener.printHelp();
     running = true;
     airsimThread = std::thread(&Simulation::threadAirsim,this);

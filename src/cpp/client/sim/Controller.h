@@ -6,7 +6,7 @@
 
 enum ControlMode{ VELOCITY_MODE,POSITION_MODE,ATTITUDE_MODE };
 
-class Autopilot {
+class Controller {
 private:
 
 	float x_r;
@@ -24,17 +24,16 @@ private:
 	float previous_error_theta;
 	float sum_error_theta;
 	float sum_error_thrust;
-	long long lastTimeStamp;
+	long long lastTimeStamp_ms;
 	static long long startupTime;
 	long long timeStampStartMoving;
 	bool flagTimeIsSet;
 	enum ControlMode controllerMode;
 public:
+    long long timestep_ms;
 	void setReference(float x, float y, float z, float heading);
 	mav::Kinematics controllerRun(mav::Kinematics kin);
-	static long long getCurrentTimeMillis();
-	void setTimeStampStartMoving() { timeStampStartMoving = getCurrentTimeMillis(); };
-	Autopilot();
+	Controller();
 	void setVelocity(float v_x, float v_y, float v_z, float psi);
 	void setAttitude(float phi_r, float theta_r, float psi_r, float z_r);
 

@@ -2,25 +2,16 @@
 #include "DroneModel.h"
 #include <iostream>
 
-long long DroneModel::startupTime = DroneModel::getCurrentTimeMillis();
 
 DroneModel::DroneModel()
 {
 	x = 0; y = 0; z = 0; v_x = 0; v_y = 0; v_z = 0; phi = 0; theta = 0; psi = 0; thrust = -GRAVITY_FACTOR; phi_r = 0; theta_r = 0; psi_r = 0;
 	dPhi = 0; dTheta = 0; dPsi = 0; p = 0; q= 0; r = 0;lastStepThrust = -GRAVITY_FACTOR;
-	lastPropagateTime = DroneModel::getCurrentTimeMillis();
+	last_timestep_ms = 0;
 }
 
 DroneModel::~DroneModel() {}
 
-long long DroneModel::getCurrentTimeMillis()
-{
-    using namespace std::chrono;
-    milliseconds ms = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
-    return ms.count();
-}
 
 void DroneModel:: setCommand(float phi_r,float theta_r,float psi_r,float thrust)
 {
@@ -91,13 +82,12 @@ void DroneModel:: propagateDroneModel()
     Matrix<float,12,1> dx;
     dx<< dPosition,dVelocity,dPhiVector,dThetaVector,dPsiVector;
 
-    long long currentTime = getCurrentTimeMillis();
 
-    float deltaT =  (currentTime - lastPropagateTime)/1000.0;
+    float deltaT =  (timestep_ms - last_timestep_ms)/1000.0f;
 
 
     Matrix<float,12,1> state = getStateVector()+dx*deltaT;
-    lastPropagateTime = currentTime;
+    last_timestep_ms = timestep_ms;
     setStateVector(state);
 
     lastStepThrust = thrust;
@@ -105,63 +95,3 @@ void DroneModel:: propagateDroneModel()
 
 }
 
-void TempleController:: setReference(float x,float y,float z,float heading)
-{
-    x_r = x; y_r = y; z_r = z; psi_r = heading;
-}
-
-
-
-void TempleController::controllerRun(DroneModel & drone)
-{
-    float deltaT = (drone.getCurrentTimeMillis()-lastTimeStamp)/1000.0;
-
-    Vector3f deltaX = Vector3f(x_r,y_r,z_r)-Vector3f(drone.getX(),drone.getY(),drone.getZ());
-    v_x_r = deltaX(0)*K_P_VX;
-    v_y_r = deltaX(1)*K_P_VY;
-    v_z_r = deltaX(2)*K_P_VZ;
-
-    float currentHeading = drone.getPsi();
-    Vector3f deltaV = Vector3f(v_x_r,v_y_r,v_z_r)-Vector3f(drone.getVx(),drone.getVy(),drone.getVz());
-    Matrix<float,3,3> rotationMatrix;
-    rotationMatrix<< cos(currentHeading),sin(currentHeading),0,-sin(currentHeading),cos(currentHeading),0,0,0,1;
-    Vector3f deltaVLocal = rotationMatrix*deltaV;
-
-    float errorPhi = deltaVLocal(1);
-    float errorTheta = deltaVLocal(0);
-    float errorThrust  = deltaVLocal(2);
-
-    sum_error_phi += errorPhi*deltaT;
-    float phi_cmd = errorPhi*K_P_PHI+(errorPhi-previous_error_phi)/deltaT*K_D_PHI+sum_error_phi*K_I_PHI;
-    previous_error_phi = errorPhi;
-
-    sum_error_theta += errorTheta*deltaT;
-    float theta_cmd = errorTheta*K_P_THETA+(errorTheta-previous_error_theta)/deltaT*K_D_THETA+sum_error_theta*K_I_THETA;
-    previous_error_theta = errorTheta;
-
-    sum_error_thrust += sum_error_thrust*deltaT;
-    float thrust_cmd = -GRAVITY_FACTOR + errorThrust*K_P_THRUST+K_I_THRUST*sum_error_thrust;
-
-    lastTimeStamp = getCurrentTimeMillis();
-    drone.setCommand(phi_cmd,theta_cmd,psi_r,thrust_cmd);
-}
-
-
-TempleController::TempleController()
-{
-    previous_error_theta = 0;
-    previous_error_phi = 0;
-    sum_error_thrust = 0;
-    sum_error_theta = 0;
-    sum_error_phi = 0;
-    lastTimeStamp = getCurrentTimeMillis();
-}
-
-long long TempleController::getCurrentTimeMillis()
-{
-    using namespace std::chrono;
-    milliseconds ms = duration_cast< milliseconds >(
-            system_clock::now().time_since_epoch()
-    );
-    return ms.count();
-}

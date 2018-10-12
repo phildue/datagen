@@ -32,7 +32,7 @@ set(ASC_INCLUDES ${CLIENT_SRC_DIR})
 set(ASC_SOURCES 
                         ${CLIENT_SRC_DIR}/airsim/AirSimInterface.cpp
                         ${CLIENT_SRC_DIR}/airsim/Session.cpp
-                        ${CLIENT_SRC_DIR}/Image.cpp
+                        ${CLIENT_SRC_DIR}/airsim/Image.cpp
                         ${CLIENT_SRC_DIR}/gui/CmdListener.cpp
                         ${CLIENT_SRC_DIR}/annotate/Camera.cpp
                         ${CLIENT_SRC_DIR}/annotate/Annotator.cpp
@@ -43,7 +43,7 @@ set(ASC_SOURCES
 set(ASC_HEADERS 
                         ${CLIENT_SRC_DIR}/airsim/AirSimInterface.h
                         ${CLIENT_SRC_DIR}/airsim/Session.h
-                        ${CLIENT_SRC_DIR}/Image.h
+                        ${CLIENT_SRC_DIR}/airsim/Image.h
                         ${CLIENT_SRC_DIR}/gui/CmdListener.h
                         ${CLIENT_SRC_DIR}/annotate/Gates.h
                         ${CLIENT_SRC_DIR}/annotate/Camera.h
@@ -65,11 +65,11 @@ set(FLIGHTSIM_SRC
         ${CLIENT_SRC_DIR}/annotate/TrajectoryPoseGenerator.cpp
         ${CLIENT_SRC_DIR}/sim/Simulation.h
         ${CLIENT_SRC_DIR}/sim/DroneModel.h
-        ${CLIENT_SRC_DIR}/sim/Autopilot.h
+        ${CLIENT_SRC_DIR}/sim/Controller.h
         ${CLIENT_SRC_DIR}/sim/SensorModel.h
         ${CLIENT_SRC_DIR}/sim/DroneModel.cpp
         ${CLIENT_SRC_DIR}/sim/Simulation.cpp
-        ${CLIENT_SRC_DIR}/sim/Autopilot.cpp
+        ${CLIENT_SRC_DIR}/sim/Controller.cpp
         ${CLIENT_SRC_DIR}/sim/SensorModel.cpp
         )
 include_directories(

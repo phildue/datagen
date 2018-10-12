@@ -16,8 +16,8 @@ STRICT_MODE_ON
 #include "vehicles/multirotor/api/MultirotorRpcLibClient.hpp"
 #include <iostream>
 #include <chrono>
-#include <Image.h>
 #include "Session.h"
+#include "Image.h"
 
 #define MAX_OBJS 20
 class AirSimInterface

@@ -20,7 +20,7 @@ SensorModel::SensorModel()
 	R(0, 0) = R_;
 	R(1, 1) = R_;
 	//R(2, 2) = R_;
-	lastUpdateTime = getCurrentTimeMillis();
+	last_timestep_ms = 0;
 	std::cout << "sesor model initialized" << std::endl;
 }
 
@@ -55,18 +55,11 @@ float SensorModel::randomNumberNorm(float randNum1, float randNum2,float sigma)
 	float r = sqrt(-2 * log(randNum2));
 	return sigma * r*cos(a);
 }
-long long SensorModel::getCurrentTimeMillis()
-{
-	using namespace std::chrono;
-	milliseconds ms = duration_cast< milliseconds >(
-		system_clock::now().time_since_epoch()
-		);
-	return ms.count();
-}
+
 
 void SensorModel::complementaryFilterAHRS_run()
 {
-	float deltaT = (getCurrentTimeMillis() - lastUpdateTime) / 1000.0;
+	float deltaT = (timestep_ms - last_timestep_ms) / 1000.0;
 	Vector3f specificForce(accX, accY, accZ);
 	Vector3f currentGravityUnit = - specificForce / specificForce.norm();
 	Vector3f previousGravityUnit(-sin(theta),sin(phi)*cos(theta),cos(phi)*cos(theta));
@@ -93,7 +86,7 @@ void SensorModel::complementaryFilterAHRS_run()
 		psi = attitude(2);
 	}
 
-	lastUpdateTime = getCurrentTimeMillis();
+	last_timestep_ms = timestep_ms;
 	//std::cout << "Angles:" << phi/3.14*180.0 << "|" << theta / 3.14*180.0 << "|" << psi / 3.14*180.0 << std::endl;
 	//std::cout << "angular Velocity: " << p << "|" << q << "|" << r << "| Acc: " << accX << "|" << accY << "|" << accZ << std::endl;
 
@@ -105,7 +98,7 @@ void SensorModel::kalmanFilterAHRS_run()
 	//std::cout << "[kalman filter] P is" << P << std::endl;
 
 	// one step prediction
-	float deltaT = (getCurrentTimeMillis() - lastUpdateTime) / 1000.0;
+	float deltaT = (timestep_ms - last_timestep_ms) / 1000.0;
 	Vector3f currentInputs(p, q, r);
 	Matrix<float, 6, 1> currentStates;
 	currentStates<< phi, theta, psi, b_p, b_q, b_r;
@@ -146,7 +139,7 @@ void SensorModel::kalmanFilterAHRS_run()
 				b_r = revisedStates(5);
 			}
 
-	lastUpdateTime = getCurrentTimeMillis();
+	last_timestep_ms = timestep_ms;
 }
 
 Matrix<float, 6, 1> SensorModel::predictionModel(Matrix<float, 6, 1> currentStates, Vector3f currentInputs, float deltaT)

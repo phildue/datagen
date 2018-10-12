@@ -64,8 +64,7 @@ private:
 	float p,q,r;
 	float phi, theta, psi;
 	float b_p, b_q, b_r;
-	long long lastUpdateTime;
-	long long getCurrentTimeMillis();
+	long long last_timestep_ms;
 	float randomNumberNorm(float randNum1,float randNum2,float sigma);
 	Matrix<float, 6, 6> linearizeSystem(Matrix<float, 6, 1> currentStates, Vector3f inputs,float deltaT);
 	Vector3f sumErrorAngularVelocity;
@@ -74,6 +73,7 @@ private:
 	Matrix3f R;
 	Matrix<float,6,1> predictionModel(Matrix<float, 6, 1> currentStates, Vector3f currentInputs, float deltaT);
 public:
+    long long timestep_ms;
 	SensorModel();
 	~SensorModel();
 	void complementaryFilterAHRS_run();
