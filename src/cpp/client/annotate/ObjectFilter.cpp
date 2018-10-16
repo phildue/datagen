@@ -28,7 +28,7 @@ bool ObjectFilter::out_of_img(int x, int y) {
     return x > img_width || x < 0 || y > img_height || y < 0;
 }
 
-ImageLabel ObjectFilter::q
+ImageLabel ObjectFilter::
 filter(ImageLabel &label) {
     ImageLabel filtered{};
     for (ObjectLabel *obj : label.objects){
