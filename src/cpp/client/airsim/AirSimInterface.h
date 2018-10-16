@@ -69,6 +69,8 @@ public:
      */
     static Eigen::Quaternionf euler2Quat(float roll, float pitch, float yaw) ;
 
+    void moveOnPath(std::vector<Eigen::Vector3f> path, float velocity, float duration);
+    void takeOff(float waitTime);
 };
 
 

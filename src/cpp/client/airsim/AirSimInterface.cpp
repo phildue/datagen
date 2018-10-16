@@ -91,6 +91,22 @@ getObjPoses(const std::string &obj_name, int max_gates)
     return gates;
 }
 
+void
+AirSimInterface::
+moveOnPath(std::vector<Eigen::Vector3f> path, float velocity,float duration) {
+    client->enableApiControl(true);
+    client->takeoff(1.0);
+    client->moveOnPath(path,velocity,duration,DrivetrainType::ForwardOnly,YawMode(false, 0),1,-1);
+    client->enableApiControl(false);
+}
+
+void
+AirSimInterface::
+takeOff(float ms)
+{
+
+}
+
 
 
 

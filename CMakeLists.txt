@@ -97,7 +97,7 @@ target_link_libraries(randomview AirLib)
 target_link_libraries(randomview ${RPC_LIB})
 target_link_libraries(randomview ${OpenCV_LIBS})
 
-add_executable(flightsimu ${SOURCES} ${HEADERS} src/cpp/datagen/flightsimu.cpp ${FLIGHTSIM_SRC})
+add_executable(flightsimu ${SOURCES} ${HEADERS} src/cpp/datagen/customcontroller.cpp ${FLIGHTSIM_SRC})
 
 target_link_libraries(flightsimu ${CMAKE_THREAD_LIBS_INIT})
 
@@ -106,6 +106,12 @@ target_link_libraries(flightsimu ${RPC_LIB})
 target_link_libraries(flightsimu ${OpenCV_LIBS})
 
 
+add_executable(airsimflight ${SOURCES} ${HEADERS} src/cpp/datagen/airsimflight.cpp ${FLIGHTSIM_SRC})
 
+target_link_libraries(airsimflight ${CMAKE_THREAD_LIBS_INIT})
+
+target_link_libraries(airsimflight AirLib)
+target_link_libraries(airsimflight ${RPC_LIB})
+target_link_libraries(airsimflight ${OpenCV_LIBS})
 
 
