@@ -266,42 +266,41 @@ TrajectoryPoseGenerator::
 trajectoryIros() {
     float v_x = 1.0;
     float v_y = 0;
-    float v_z = -0.01f;
+    float v_z = -0.02f;
     float heading = 0;
 
-    updateVelocity(v_x, v_y, v_z, heading, 20000);
+    updateVelocity(v_x, v_y, v_z, heading, 25000);
 
     v_y = 1.0;
     updateVelocity(v_x, v_y, v_z, heading, 1000);
 
     v_y = 0.0;
-    updateVelocity(v_x, v_y, v_z, heading, 11000);
+    updateVelocity(v_x, v_y, v_z, heading, 12000);
 
     heading = M_PIf / 2;
     updateVelocity(v_x, v_y, v_z, heading, 2000);
-
 
     v_y = 1.0;
     updateVelocity(v_x, v_y, v_z, heading, 5000);
 
     v_x = 0.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 9000);
+    updateVelocity(v_x, v_y, v_z, heading, 18000);
 
     heading = -M_PIf;
     updateVelocity(v_x, v_y, v_z, heading, 2000);
     v_x = -1.0f;
     v_y = 0.0;
-    updateVelocity(v_x, v_y, v_z, heading, 30000);
+    updateVelocity(v_x, v_y, v_z, heading, 38000);
 
     heading = -M_PIf / 2;
     v_x = 0.0f;
     v_y = -1.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 8000);
+    updateVelocity(v_x, v_y, v_z, heading, 14000);
     //jungle
     heading = 0;
     v_y = 0.0f;
     v_x = 1.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 8000);
+    updateVelocity(v_x, v_y, v_z, heading, 10000);
 
     heading = -M_PIf / 2;
     v_y = 1.0f;
@@ -309,12 +308,12 @@ trajectoryIros() {
 
     v_x = 0.0f;
     v_y = -1.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 11000);
+    updateVelocity(v_x, v_y, v_z, heading, 19000);
 
     heading = M_PIf;
     v_x = -1.0f;
     v_y = 0.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 15000);
+    updateVelocity(v_x, v_y, v_z, heading, 10000);
 
     heading = 0;
     v_x = 0.0f;
