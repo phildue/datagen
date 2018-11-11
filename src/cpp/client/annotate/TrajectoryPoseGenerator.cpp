@@ -308,17 +308,14 @@ trajectoryIros() {
 
     v_x = 0.0f;
     v_y = -1.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 19000);
+    updateVelocity(v_x, v_y, v_z, heading, 18000);
 
     heading = M_PIf;
     v_x = -1.0f;
     v_y = 0.0f;
     updateVelocity(v_x, v_y, v_z, heading, 10000);
 
-    heading = 0;
-    v_x = 0.0f;
-    v_y = -1.0f;
-    updateVelocity(v_x, v_y, v_z, heading, 5000);
+
 
 }
 }
