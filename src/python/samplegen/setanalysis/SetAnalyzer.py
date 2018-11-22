@@ -1,10 +1,6 @@
 import numpy as np
 from sklearn.cluster import KMeans
 
-from modelzoo.backend.visuals.plots.BaseHist import BaseHist
-from modelzoo.backend.visuals.plots.BaseMultiPlot import BaseMultiPlot
-from modelzoo.backend.visuals.plots.BoxPlot import BoxPlot
-from modelzoo.backend.visuals.plots.Heatmap import Heatmap
 from utils.BoundingBox import BoundingBox
 from utils.fileaccess.labelparser.DatasetParser import DatasetParser
 

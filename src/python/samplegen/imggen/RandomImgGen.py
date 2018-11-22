@@ -5,8 +5,7 @@ from scipy import signal
 import numpy as np
 
 from samplegen.imggen.ImgGen import ImgGen
-from utils.imageprocessing.Backend import imread, replace_background, blur, noisy, convert_color, COLOR_BGR2YUV, resize, \
-    brightness
+from utils.imageprocessing.Backend import imread, replace_background, blur, noisy, convert_color, COLOR_BGR2YUV, resize
 from utils.imageprocessing.Image import Image
 from utils.imageprocessing.transform.ImgTransform import ImgTransform
 from utils.labels.ImgLabel import ImgLabel
